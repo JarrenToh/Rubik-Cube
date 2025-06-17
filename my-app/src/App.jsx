@@ -30,37 +30,33 @@ function Box(props) {
 function Cubie({ x, y, z, cubeSize, gap, colors }) {
   const offset = cubeSize + gap;
   const materials = useMemo(() => {
-    const base = new Array(6).fill(
-      <meshBasicMaterial attach="material" color={colors.black} />
-    );
+    const base = new Array(6)
+      .fill(null)
+      .map((_, index) => (
+        <meshBasicMaterial
+          key={index}
+          attach={`material-${index}`}
+          color={colors.black}
+        />
+      ));
 
     if (x === 1)
-      base[0] = (
-        <meshBasicMaterial attachArray="material" color={colors.orange} />
-      );
+      base[0] = <meshBasicMaterial attach="material-0" color={colors.orange} />;
     if (x === -1)
-      base[1] = <meshBasicMaterial attachArray="material" color={colors.red} />;
+      base[1] = <meshBasicMaterial attach="material-1" color={colors.red} />;
     if (y === 1)
-      base[2] = (
-        <meshBasicMaterial attachArray="material" color={colors.yellow} />
-      );
+      base[2] = <meshBasicMaterial attach="material-2" color={colors.yellow} />;
     if (y === -1)
-      base[3] = (
-        <meshBasicMaterial attachArray="material" color={colors.white} />
-      );
+      base[3] = <meshBasicMaterial attach="material-3" color={colors.white} />;
     if (z === 1)
-      base[4] = (
-        <meshBasicMaterial attachArray="material" color={colors.blue} />
-      );
+      base[4] = <meshBasicMaterial attach="material-4" color={colors.blue} />;
     if (z === -1)
-      base[5] = (
-        <meshBasicMaterial attachArray="material" color={colors.yellow} />
-      );
+      base[5] = <meshBasicMaterial attach="material-5" color={colors.green} />;
 
     return base;
   }, [x, y, z, colors]);
 
-  console.log("materials: ", materials);
+  console.log(materials[0]);
   return (
     <group position={[offset * x, offset * y, offset * z]}>
       <mesh>
@@ -72,7 +68,6 @@ function Cubie({ x, y, z, cubeSize, gap, colors }) {
 }
 
 function RubiksCube({ cubeSize, gap, colors }) {
-  // console.log("colours", colors.black);
   const positions = useMemo(() => {
     const pos = [];
     for (let x = -1; x <= 1; x++) {
