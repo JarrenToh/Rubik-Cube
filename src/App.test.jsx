@@ -1,14 +1,12 @@
 import { describe, it, expect } from 'vitest';
-import { render } from '@testing-library/react';
 import { colors } from './constants'
 import ReactThreeTestRenderer from '@react-three/test-renderer'
 
-
 import { Cubie } from './App';
-import { cos } from 'three/tsl';
 
-const findByType = (renderer, type) => {
-    return renderer.toTree()[0].children.find((mesh) => mesh.type === type);
+
+const getColorHex = (color) => {
+    return `#${color.getHex().toString(16).padStart(6, '0')}`;
 };
 
 describe('Cubie', () => {
@@ -36,7 +34,7 @@ describe('Cubie', () => {
 
         // index 0 is the geometry, so we start from index 1
         cubie.children.slice(1, 7).forEach((face, i) => {
-            const color = `#${face.props.color.getHex().toString(16).padStart(6, '0')}`;
+            const color = getColorHex(face.props.color);
             expect(color).toBe(expectedColors[i]);
         });
     });
@@ -50,8 +48,9 @@ describe('Cubie', () => {
         // index 0 is the geometry, so we start from index 1
         cubie.children.slice(1, 7).forEach((face, i) => {
             // check if all faces are black
-            const color = `#${face.props.color.getHex().toString(16).padStart(6, '0')}`;
+            const color = getColorHex(face.props.color);
             expect(color).toBe('#000000'); // black
         });
     });
+
 });
