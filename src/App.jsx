@@ -1,7 +1,8 @@
 import { OrbitControls } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useMemo, useRef, useState } from "react";
-import * as THREE from "three";
+
+import { colors } from "./constants";
 
 function Box(props) {
   // This reference gives us direct access to the THREE.Mesh object
@@ -90,15 +91,6 @@ function RubiksCube({ cubeSize, gap, colors }) {
 }
 
 export default function App() {
-  const colors = {
-    white: new THREE.Color().setHex(0xffffff),
-    yellow: new THREE.Color().setHex(0xffff00),
-    red: new THREE.Color().setHex(0xff0000),
-    orange: new THREE.Color().setHex(0xffa500),
-    blue: new THREE.Color().setHex(0x0000ff),
-    green: new THREE.Color().setHex(0x008000),
-    black: new THREE.Color().setHex(0x000000),
-  };
   return (
     <Canvas camera={{ position: [0, 0, 5], fov: 45, near: 0.1, far: 1000 }}>
       <ambientLight intensity={Math.PI / 2} />
