@@ -27,7 +27,7 @@ function Box(props) {
   );
 }
 
-function Cubie({ x, y, z, cubeSize, gap, colors }) {
+export function Cubie({ x, y, z, cubeSize, gap, colors }) {
   const offset = cubeSize + gap;
   const materials = useMemo(() => {
     const faceColors = [
