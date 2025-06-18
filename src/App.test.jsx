@@ -5,10 +5,6 @@ import ReactThreeTestRenderer from '@react-three/test-renderer'
 import { Cubie } from './App';
 
 
-const getColorHex = (color) => {
-    return `#${color.getHex().toString(16).padStart(6, '0')}`;
-};
-
 describe('Cubie', () => {
 
     it('renders without crashing', async () => {
@@ -24,18 +20,17 @@ describe('Cubie', () => {
 
         // Should have orange (right), yellow (top), blue (front)
         const expectedColors = [
-            '#ffa500', // 1: right (orange)
-            '#000000', // 2: left (black)
-            '#ffff00', // 3: top (yellow)
-            '#000000', // 4: bottom (black)
-            '#0000ff', // 5: front (blue)
-            '#000000', // 6: back (black)
+            colors.orange, // 1: right (orange)
+            colors.black, // 2: left (black)
+            colors.yellow, // 3: top (yellow)
+            colors.black, // 4: bottom (black)
+            colors.blue, // 5: front (blue)
+            colors.black, // 6: back (black)
         ];
 
         // index 0 is the geometry, so we start from index 1
         cubie.children.slice(1, 7).forEach((face, i) => {
-            const color = getColorHex(face.props.color);
-            expect(color).toBe(expectedColors[i]);
+            expect(face.props.color).toBe(expectedColors[i]);
         });
     });
 
@@ -48,8 +43,7 @@ describe('Cubie', () => {
         // index 0 is the geometry, so we start from index 1
         cubie.children.slice(1, 7).forEach((face, i) => {
             // check if all faces are black
-            const color = getColorHex(face.props.color);
-            expect(color).toBe('#000000'); // black
+            expect(face.props.color).toBe(colors.black);
         });
     });
 
