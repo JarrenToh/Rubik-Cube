@@ -30,30 +30,22 @@ function Box(props) {
 function Cubie({ x, y, z, cubeSize, gap, colors }) {
   const offset = cubeSize + gap;
   const materials = useMemo(() => {
-    const base = new Array(6)
-      .fill(null)
-      .map((_, index) => (
-        <meshBasicMaterial
-          key={index}
-          attach={`material-${index}`}
-          color={colors.black}
-        />
-      ));
+    const faceColors = [
+      x === 1 ? colors.orange : colors.black, // right
+      x === -1 ? colors.red : colors.black,   // left
+      y === 1 ? colors.yellow : colors.black, // top
+      y === -1 ? colors.white : colors.black, // bottom
+      z === 1 ? colors.blue : colors.black,   // front
+      z === -1 ? colors.green : colors.black, // back
+    ];
 
-    if (x === 1)
-      base[0] = <meshBasicMaterial attach="material-0" color={colors.orange} />;
-    if (x === -1)
-      base[1] = <meshBasicMaterial attach="material-1" color={colors.red} />;
-    if (y === 1)
-      base[2] = <meshBasicMaterial attach="material-2" color={colors.yellow} />;
-    if (y === -1)
-      base[3] = <meshBasicMaterial attach="material-3" color={colors.white} />;
-    if (z === 1)
-      base[4] = <meshBasicMaterial attach="material-4" color={colors.blue} />;
-    if (z === -1)
-      base[5] = <meshBasicMaterial attach="material-5" color={colors.green} />;
-
-    return base;
+    return faceColors.map((color, index) => (
+      <meshBasicMaterial
+        key={index}
+        attach={`material-${index}`}
+        color={color}
+      />
+    ));
   }, [x, y, z, colors]);
 
   console.log(materials[0]);
