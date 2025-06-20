@@ -1,7 +1,8 @@
 import { OrbitControls } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useMemo, useRef, useState } from "react";
-import * as THREE from "three";
+
+import { colors } from "./constants";
 
 function Box(props) {
   // This reference gives us direct access to the THREE.Mesh object
@@ -27,33 +28,25 @@ function Box(props) {
   );
 }
 
-function Cubie({ x, y, z, cubeSize, gap, colors }) {
+export function Cubie({ x, y, z, cubeSize, gap, colors }) {
   const offset = cubeSize + gap;
   const materials = useMemo(() => {
-    const base = new Array(6)
-      .fill(null)
-      .map((_, index) => (
-        <meshBasicMaterial
-          key={index}
-          attach={`material-${index}`}
-          color={colors.black}
-        />
-      ));
+    const faceColors = [
+      x === 1 ? colors.orange : colors.black, // right
+      x === -1 ? colors.red : colors.black,   // left
+      y === 1 ? colors.yellow : colors.black, // top
+      y === -1 ? colors.white : colors.black, // bottom
+      z === 1 ? colors.blue : colors.black,   // front
+      z === -1 ? colors.green : colors.black, // back
+    ];
 
-    if (x === 1)
-      base[0] = <meshBasicMaterial attach="material-0" color={colors.orange} />;
-    if (x === -1)
-      base[1] = <meshBasicMaterial attach="material-1" color={colors.red} />;
-    if (y === 1)
-      base[2] = <meshBasicMaterial attach="material-2" color={colors.yellow} />;
-    if (y === -1)
-      base[3] = <meshBasicMaterial attach="material-3" color={colors.white} />;
-    if (z === 1)
-      base[4] = <meshBasicMaterial attach="material-4" color={colors.blue} />;
-    if (z === -1)
-      base[5] = <meshBasicMaterial attach="material-5" color={colors.green} />;
-
-    return base;
+    return faceColors.map((color, index) => (
+      <meshBasicMaterial
+        key={index}
+        attach={`material-${index}`}
+        color={color}
+      />
+    ));
   }, [x, y, z, colors]);
 
   console.log(materials[0]);
@@ -67,7 +60,7 @@ function Cubie({ x, y, z, cubeSize, gap, colors }) {
   );
 }
 
-function RubiksCube({ cubeSize, gap, colors }) {
+export function RubiksCube({ cubeSize, gap, colors }) {
   const positions = useMemo(() => {
     const pos = [];
     for (let x = -1; x <= 1; x++) {
@@ -98,15 +91,6 @@ function RubiksCube({ cubeSize, gap, colors }) {
 }
 
 export default function App() {
-  const colors = {
-    white: new THREE.Color().setHex(0xffffff),
-    yellow: new THREE.Color().setHex(0xffff00),
-    red: new THREE.Color().setHex(0xff0000),
-    orange: new THREE.Color().setHex(0xffa07a),
-    blue: new THREE.Color().setHex(0x0000ff),
-    green: new THREE.Color().setHex(0x008000),
-    black: new THREE.Color().setHex(0x000000),
-  };
   return (
     <Canvas camera={{ position: [0, 0, 5], fov: 45, near: 0.1, far: 1000 }}>
       <ambientLight intensity={Math.PI / 2} />
