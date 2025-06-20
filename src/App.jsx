@@ -60,7 +60,7 @@ export function Cubie({ x, y, z, cubeSize, gap, colors }) {
   );
 }
 
-function RubiksCube({ cubeSize, gap, colors }) {
+export function RubiksCube({ cubeSize, gap, colors }) {
   const positions = useMemo(() => {
     const pos = [];
     for (let x = -1; x <= 1; x++) {

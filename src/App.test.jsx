@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { colors } from './constants'
 import ReactThreeTestRenderer from '@react-three/test-renderer'
 
-import { Cubie } from './App';
+import { Cubie, RubiksCube } from './App';
 
 
 describe('Cubie', () => {
@@ -47,4 +47,19 @@ describe('Cubie', () => {
         });
     });
 
+});
+
+describe('RubiksCube', () => {
+
+    it('renders without crashing', async () => {
+        const renderer = ReactThreeTestRenderer.create(<RubiksCube cubeSize={1} gap={0.05} colors={colors} />)
+        expect(renderer).toBeDefined();
+    });
+
+    it('check if rubiks cube have 27 cubies', async () => {
+        const renderer = await ReactThreeTestRenderer.create(<RubiksCube cubeSize={1} gap={0.05} colors={colors} />)
+
+        expect(renderer.toTree()[0].children.length).toBe(27);
+
+        });
 });
