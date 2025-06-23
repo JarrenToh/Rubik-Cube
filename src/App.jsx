@@ -2,7 +2,6 @@ import { OrbitControls } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useMemo, useRef, useState } from "react";
 import { Plane, Vector3 } from "three";
-import { Color } from "three";
 
 import { colors } from "./constants";
 
