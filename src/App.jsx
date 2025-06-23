@@ -53,7 +53,10 @@ export function Cubie({ x, y, z, cubeSize, gap, colors }) {
   console.log(materials[0]);
   return (
     <group position={[offset * x, offset * y, offset * z]}>
-      <mesh>
+      <mesh onClick={(event) =>{
+        event.stopPropagation();
+        document.getElementById("info").innerText = `Cubie clicked at (${x}, ${y}, ${z})`;
+      }}>
         <boxGeometry args={[cubeSize, cubeSize, cubeSize]} />
         {materials}
       </mesh>
