@@ -2,6 +2,7 @@ import { OrbitControls } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useMemo, useRef, useState } from "react";
 import { Plane, Vector3 } from "three";
+import { Color } from "three";
 
 import { colors } from "./constants";
 
@@ -118,9 +119,21 @@ export default function App() {
       <Box position={[1.2, 0, 0]} /> */}
       <RubiksCube cubeSize={1} gap={0.05} colors={colors} />
       <OrbitControls />
-      <axesHelper args={[5]} />
+      {/* <axesHelper args={[5]} ref={(ref) => {
+              if (ref) {
+                ref.setColors( new Color('black'),  new Color('black'),  new Color('black'));
+              }
+            }} /> */}
+      
+      // Visualize the axes
+      // X axis is red
+      <arrowHelper args={[new Vector3(1, 0, 0), new Vector3(0, 0, 0), 5, 0xff0000]} />
+      // Y axis is green
+      <arrowHelper args={[new Vector3(0, 1, 0), new Vector3(0, 0, 0), 5, 0x00ff00]} />
+      // Z axis is blue
+      <arrowHelper args={[new Vector3(0, 0, 1), new Vector3(0, 0, 0), 5, 0x0000ff]} />
       <planeHelper args={[new Plane(new Vector3(0, 0, -5), 4), 5, 0x0000ff]} /> //XY
-      <planeHelper args={[new Plane(new Vector3(0, -5, 0), 4), 5, 0xffff00]} /> //XZ
+      <planeHelper args={[new Plane(new Vector3(0, -5, 0), 4), 5, 0x00ff00]} /> //XZ
       <planeHelper args={[new Plane(new Vector3(-5, 0, 0), 4), 5, 0xff0000]} /> //YZ
     </Canvas>
   );
