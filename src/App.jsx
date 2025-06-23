@@ -1,6 +1,7 @@
 import { OrbitControls } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useMemo, useRef, useState } from "react";
+import { Plane, Vector3 } from "three";
 
 import { colors } from "./constants";
 
@@ -118,6 +119,9 @@ export default function App() {
       <RubiksCube cubeSize={1} gap={0.05} colors={colors} />
       <OrbitControls />
       <axesHelper args={[5]} />
+      <planeHelper args={[new Plane(new Vector3(0, 0, -5), 4), 5, 0x0000ff]} /> //XY
+      <planeHelper args={[new Plane(new Vector3(0, -5, 0), 4), 5, 0xffff00]} /> //XZ
+      <planeHelper args={[new Plane(new Vector3(-5, 0, 0), 4), 5, 0xff0000]} /> //YZ
     </Canvas>
   );
 }
